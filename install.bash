@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Defaults
-PACKAGES='git@bitbucket.org:atmosol/dot-desktop.git'
+PACKAGES='ssh://git@bitbucket.org/atmosol/dot-desktop.git'
 SSH_KEY=$HOME/.ssh/id_rsa
 SSH_COMMENT="$(whoami)@$(hostname)"
 
@@ -132,10 +132,9 @@ if [ $? -eq 255 ]; then
 fi
 # End BitBucket
 
-echo -e "\nInstalling ellipsis...\n"
+echo -e "\nInstalling ellipsis with the following packages: $PACKAGES...\n"
 
-curl -sL ellipsis.sh | sh
-$HOME/.ellipsis/bin/ellipsis install $PACKAGES
+curl -sL ellipsis.sh | ELLIPSIS_USER="$ELLIPSIS_USER" PACKAGES="$PACKAGES" sh
 
 # Stop the SSH agent
 ssh-agent -k &>/dev/null
