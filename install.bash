@@ -132,9 +132,10 @@ if [ $? -eq 255 ]; then
 fi
 # End BitBucket
 
-echo -e "\nInstalling ellipsis with the following packages: $PACKAGES...\n"
+echo -e "\nInstalling ellipsis...\n"
 
-curl -sL ellipsis.sh | ELLIPSIS_USER="$ELLIPSIS_USER" PACKAGES="$PACKAGES" sh
+curl -sL ellipsis.sh | sh
+$HOME/.ellipsis/bin/ellipsis install $PACKAGES
 
 # Stop the SSH agent
 ssh-agent -k &>/dev/null
