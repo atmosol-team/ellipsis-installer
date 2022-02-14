@@ -134,7 +134,11 @@ fi
 
 echo -e "\nInstalling ellipsis with the following packages: $PACKAGES...\n"
 
-curl -sL ellipsis.sh | ELLIPSIS_USER="$ELLIPSIS_USER" PACKAGES="$PACKAGES" sh
+curl -sL ellipsis.sh | sh
+if [ -x "$HOME/.ellipsis/bin/ellipsis" ]; then
+    $HOME/.ellipsis/bin/ellipsis install "$PACKAGES"
+fi
+
 
 # Stop the SSH agent
 ssh-agent -k &>/dev/null
