@@ -23,9 +23,9 @@ fi
 
 # Check SSH key pair
 if [ ! -f $SSH_KEY ] || [ ! -f $SSH_KEY.pub ]; then
-    echo ""
     # If default pair not found, prompt for location
-    read -e -p "SSH key location: [~/.ssh/id_rsa] " SSH_KEY
+    echo -e "\nSSH key not found. Specify location, or press enter to use defaults.\n"
+    read -e -p "  SSH key location: [~/.ssh/id_rsa] " SSH_KEY
     if [ -z "$SSH_KEY" ]; then
         # If unspecified, fallback to default location
         SSH_KEY=$HOME/.ssh/id_rsa
@@ -34,13 +34,15 @@ if [ ! -f $SSH_KEY ] || [ ! -f $SSH_KEY.pub ]; then
     # If neither key is found, generate a new key
     if [ ! -f $SSH_KEY ] && [ ! -f $SSH_KEY.pub ]; then
         # Get a comment for the new key
-        read -e -p "Comment to identify new SSH key: [$(whoami)@$(hostname)] " SSH_COMMENT
+        echo -e "\nSpecify a comment for your new key, or press enter to use defaults.\n"
+        read -e -p "  SSH key comment: [$(whoami)@$(hostname)] " SSH_COMMENT
         if [ -z "$SSH_COMMENT" ]; then
             # Default to username@hostname
             SSH_COMMENT="$(whoami)@$(hostname)"
         fi
         SSH_DEFAULT_COMMENT="$SSH_COMMENT"
         # Generate the key
+        echo -e "\nCreating SSH key...\n"
         ssh-keygen -f "$SSH_KEY" -t rsa -C "$SSH_COMMENT"
     elif [ ! -f $SSH_KEY ] || [ ! -f $SSH_KEY.pub ]; then
         # If one key is found but not the other, abort...  Something strange is going on.
