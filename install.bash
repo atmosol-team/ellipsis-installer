@@ -143,7 +143,6 @@ if [ -x "$HOME/.ellipsis/bin/ellipsis" ]; then
     $HOME/.ellipsis/bin/ellipsis install "$PACKAGES"
 fi
 
-
 # Stop the SSH agent
 ssh-agent -k &>/dev/null
 echo -e "\nTemporary SSH agent stopped.\n"
